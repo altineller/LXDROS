@@ -24,7 +24,6 @@ config:
       #
       - "apt-key adv --fetch-keys 'https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc'"
       - "apt-add-repository 'http://packages.ros.org/ros/ubuntu' -y"
-      - "apt-add-repository 'http://packages.ros.org/ros2/ubuntu' -y"
       #
       - [sh, '-c', 'apt update -y']
       - [sh, '-c', 'apt install ros-noetic-desktop -y']
