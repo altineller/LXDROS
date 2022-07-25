@@ -29,6 +29,7 @@ config:
       - [sh, '-c', 'apt install ros-galactic-desktop -y']
       #
       - [sh, '-c', 'apt install python3-pip build-essential -y']
+      - [sh, '-c', 'apt install binutils-arm-none-eabi -y']
       - [sh, '-c', 'apt install python3-colcon-ros python3-colcon-common-extensions python3-rosdep2 -y']
       - [sh, '-c', 'apt install libusb-dev -y']
       - [sh, '-c', 'apt install libgconf-2-4 libncurses5 libpython2.7 libtinfo5 -y']
