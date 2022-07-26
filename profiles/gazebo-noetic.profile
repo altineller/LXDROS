@@ -1,5 +1,4 @@
 config:
-  # limits.memory: 16384MB
   environment.DISPLAY: :0
   nvidia.driver.capabilities: all
   nvidia.runtime: "true"
@@ -9,34 +8,46 @@ config:
     package_update: yes
     package_upgrade: yes
     packages:
-      - net-tools
-      - bridge-utils
       - x11-apps
       - mesa-utils
       - libnss-mdns
-      - gnuplot-nox
-      - ffmpeg
-      - xvfb
+      - net-tools
+      - bridge-utils
+      - curl
+      - gnupg
+      - lsb-release
     runcmd:
       - [sh, '-c', 'rm -rf /var/lib/apt/lists/*']
-      # gazebo 11
+      - [sh, '-c', 'apt install locales -y']
+      - [sh, '-c', 'locale-gen en_US en_US.UTF-8']
+      - [sh, '-c', 'update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8']
+      #
       - [sh, '-c', 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable focal main" > /etc/apt/sources.list.d/gazebo-stable.list']
       - [sh, '-c', 'wget https://packages.osrfoundation.org/gazebo.key -O - | apt-key add -']
       - [sh, '-c', 'apt update -y']
       - [sh, '-c', 'apt install gazebo11 -y']
       - [sh, '-c', 'apt install libgazebo11-dev -y']
-      # ros noetic
-      - [sh, '-c', 'echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros-latest.list']
-      - [sh, '-c', 'apt-key adv --keyserver "hkp://keyserver.ubuntu.com:80" --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654']
+      #
+      - "apt-key adv --fetch-keys 'https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc'"
+      - "apt-add-repository 'http://packages.ros.org/ros/ubuntu' -y"
+      #
       - [sh, '-c', 'apt update -y']
       - [sh, '-c', 'apt install ros-noetic-desktop -y']
-      - [sh, '-c', 'apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential -y']
+      #
+      - [sh, '-c', 'apt install python3-pip build-essential -y']
+      - [sh, '-c', 'apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool -y']
       - [sh, '-c', 'apt install python-is-python3 python3-osrf-pycommon python3-catkin-tools -y']
+      #
+      - [sh, '-c', 'apt install libusb-dev -y']
+      - [sh, '-c', 'apt install libgconf-2-4 libncurses5 libpython2.7 libtinfo5 -y']
+      - [sh, '-c', 'sudo -u ubuntu pip3 install -U argcomplete']
+      #
       - [rosdep, 'init']
-      # setup
-      - [sh, '-c', 'echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc']
-      - [sh, '-c', 'sudo -u ubuntu echo "source /opt/ros/noetic/setup.bash" >> /home/ubuntu/.bashrc']
       - [sh, '-c', 'sudo -u ubuntu rosdep update']
+      #
+      - [sh, '-c', 'sudo -u ubuntu echo "export LANG=en_US.UTF-8" >> /home/ubuntu/.bashrc']
+      - [sh, '-c', 'sudo -u ubuntu echo "source /opt/ros/noetic/setup.bash" >> /home/ubuntu/.bashrc']
+      - [sh, '-c', 'rm -rf /var/lib/apt/lists/*']
 description: gazebo-noetic
 devices:
   X0:

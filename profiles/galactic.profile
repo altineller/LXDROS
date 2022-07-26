@@ -22,14 +22,14 @@ config:
       - [sh, '-c', 'locale-gen en_US en_US.UTF-8']
       - [sh, '-c', 'update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8']
       #
-      - "apt-key adv --fetch-keys 'https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc'"
-      - "apt-add-repository 'http://packages.ros.org/ros2/ubuntu' -y"
+      - [sh, '-c', 'curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg']
+      - [sh, '-c', 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null']
       #
       - [sh, '-c', 'apt update -y']
       - [sh, '-c', 'apt install ros-galactic-desktop -y']
       #
       - [sh, '-c', 'apt install python3-pip build-essential -y']
-      - [sh, '-c', 'apt install binutils-arm-none-eabi -y']
+      - [sh, '-c', 'apt install binutils-arm-none-eabi gcc-arm-none-eabi -y']
       - [sh, '-c', 'apt install python3-colcon-ros python3-colcon-common-extensions python3-rosdep2 -y']
       - [sh, '-c', 'apt install libusb-dev -y']
       - [sh, '-c', 'apt install libgconf-2-4 libncurses5 libpython2.7 libtinfo5 -y']

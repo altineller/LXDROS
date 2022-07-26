@@ -16,8 +16,6 @@ config:
       - curl
       - gnupg
       - lsb-release
-    runcmd:
-      - [sh, '-c', 'rm -rf /var/lib/apt/lists/*']
 description: x11
 devices:
   X0:
