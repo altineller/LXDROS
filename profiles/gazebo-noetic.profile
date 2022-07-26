@@ -17,7 +17,6 @@ config:
       - gnupg
       - lsb-release
     runcmd:
-      - [sh, '-c', 'rm -rf /var/lib/apt/lists/*']
       - [sh, '-c', 'apt install locales -y']
       - [sh, '-c', 'locale-gen en_US en_US.UTF-8']
       - [sh, '-c', 'update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8']
@@ -47,6 +46,7 @@ config:
       #
       - [sh, '-c', 'sudo -u ubuntu echo "export LANG=en_US.UTF-8" >> /home/ubuntu/.bashrc']
       - [sh, '-c', 'sudo -u ubuntu echo "source /opt/ros/noetic/setup.bash" >> /home/ubuntu/.bashrc']
+      - [sh, '-c', 'apt autoremove -y']
       - [sh, '-c', 'rm -rf /var/lib/apt/lists/*']
 description: gazebo-noetic
 devices:
